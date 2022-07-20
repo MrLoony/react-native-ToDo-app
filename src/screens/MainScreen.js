@@ -1,17 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, View, FlatList, Image, Dimensions, EventEmitter } from 'react-native';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
+import { StyleSheet, View, FlatList, Image, Dimensions } from 'react-native';
 import { AddTodo } from '../components/AddTodo';
 import { Todo } from '../components/Todo';
+import { AppLoader } from '../components/ui/AppLoader';
 import { ScreenContext } from '../context/screen/screenContext';
 import { TodoContext } from '../context/todo/todoContext';
 import { THEME } from '../theme';
 
 export const MainScreen = () => {
-    const { addTodo, todos, removeTodo } = useContext(TodoContext)
+    const { addTodo, todos, removeTodo, fetchTodos, loading } = useContext(TodoContext)
     const { changeScreen } = useContext(ScreenContext)
     const [deviceWidth, setDeviceWidth] = useState(
         Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2
     )
+
+    const loadTodos = useCallback(async () => await fetchTodos(), [fetchTodos])
+
+    useEffect(() => {
+        loadTodos()
+    }, [])
 
     useEffect(() => {
         const update = () => {
@@ -24,6 +31,10 @@ export const MainScreen = () => {
             Dimensions.removeEventListener('change', update)
         }
     })
+
+    if (loading) {
+        return <AppLoader />
+    }
 
     let content = (
         <View style={{ width: deviceWidth }}>

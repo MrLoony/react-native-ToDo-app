@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, { useContext } from 'react'
 import {View, StyleSheet} from 'react-native'
 import { MainScreen } from './screens/MainScreen';
 import { TodoScreen } from './screens/TodoScreen'

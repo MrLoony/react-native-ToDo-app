@@ -1,12 +1,14 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { View, LogBox } from 'react-native';
 import * as Font from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen';
 
 import { TodoState } from './src/context/todo/TodoState';
-import { ScreenState } from './src/context/screen/screenState';
+import { ScreenState } from './src/context/screen/ScreenState';
 import { MainLayout } from './src/MainLayout';
 
+// Warning ignore
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 SplashScreen.preventAutoHideAsync();
 
